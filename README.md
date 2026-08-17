@@ -69,5 +69,10 @@ BSc Informatics & Computer Science, Strathmore University
 ## 📄 License
 
 This project was built as part of the IS-PROJECT-2026 GitHub Crash Program at Strathmore University School of Computing and Engineering Sciences.
+
+## 👏 Acknowledgements
+- Strathmore University School of Computing and Engineering Sciences
 ```
+
+
 
