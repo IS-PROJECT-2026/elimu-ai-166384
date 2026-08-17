@@ -1,27 +1,27 @@
-# Elimu AI 🦁
+# Elimu AI
 
-> An AI-powered CBC study assistant for Kenyan students, built with HTML, CSS, JavaScript and the Gemini API.
+An AI-powered CBC study assistant for Kenyan students, built with HTML, CSS, JavaScript and the Groq API.
 
-![Elimu AI](https://img.shields.io/badge/CBC-Kenya-green) ![Gemini AI](https://img.shields.io/badge/Powered%20by-Gemini%20AI-blue) ![GitHub Pages](https://img.shields.io/badge/Deployed-GitHub%20Pages-orange)
+![CBC Kenya](https://img.shields.io/badge/CBC-Kenya-green) ![Groq AI](https://img.shields.io/badge/Powered%20by-Groq%20AI-blue) ![GitHub Pages](https://img.shields.io/badge/Deployed-GitHub%20Pages-orange)
 
-## 🌍 Live Demo
+## Live Demo
 
-**[https://is-project-2026.github.io/elimu-ai-166384/](https://is-project-2026.github.io/elimu-ai-166384/)**
+**https://is-project-2026.github.io/elimu-ai-166384/**
 
-## 📖 About
+## About
 
-Elimu AI is a free, browser-based study companion designed for Kenyan primary and secondary school students (Grade 1–12) following the Competency Based Curriculum (CBC). Students can ask questions in any CBC subject and receive instant, age-appropriate explanations with Kenyan real-life examples. The built-in quiz mode generates fresh AI-powered questions for every topic.
+Elimu AI is a browser-based study companion for Kenyan primary and secondary school students (Grade 1–12) following the Competency Based Curriculum (CBC). Students can ask questions in any CBC subject and get instant, grade-appropriate explanations with Kenyan real-life examples. The quiz mode generates fresh AI-powered questions for every topic.
 
-## ✨ Features
+## Features
 
-- 💬 **AI Chat Tutor** — Ask anything about CBC subjects and get clear, grade-appropriate answers
-- 🧠 **Quiz Mode** — AI generates multiple choice questions with Kenyan context (chapati, matatu, shamba)
-- 📚 **7 Subjects** — Maths, Science, English, Kiswahili, Social Studies, ICT, Creative Arts
-- 🎓 **Grade Selector** — Personalises responses for Grade 1 through Grade 12
-- 📱 **Mobile Friendly** — Works on cheap Android tablets common in Kenyan schools
-- 🌟 **Score Tracker** — Tracks correct quiz answers per session
+- AI Chat Tutor — Ask anything about CBC subjects and get clear, grade-appropriate answers
+- Quiz Mode — AI generates multiple choice questions with Kenyan context
+- 7 Subjects — Maths, Science, English, Kiswahili, Social Studies, ICT, Creative Arts
+- Grade Selector — Personalises responses for Grade 1 through Grade 12
+- Mobile Friendly — Works on Android tablets common in Kenyan schools
+- Score Tracker — Tracks correct quiz answers per session
 
-## 🛠️ Technologies Used
+## Tech Stack
 
 | Technology | Purpose |
 |---|---|
@@ -29,54 +29,44 @@ Elimu AI is a free, browser-based study companion designed for Kenyan primary an
 | CSS3 | Custom animations and responsive design |
 | JavaScript (ES6+) | App logic, API calls, DOM manipulation |
 | Tailwind CSS | Utility-first styling framework |
-| Google Gemini API | AI chat responses and quiz generation |
-| GitHub Pages | Free static site hosting with CI/CD |
+| Groq API | AI chat responses and quiz generation |
+| GitHub Pages | Static site hosting with CI/CD |
 | Nunito Sans | Kid-friendly rounded typography |
 | Material Symbols | Icon library |
 
-## 🚀 Getting Started
+## Getting Started
 
-### Prerequisites
-- A modern web browser
-- A Gemini API key (free at [aistudio.google.com](https://aistudio.google.com))
-
-### Local Setup
 ```bash
 git clone https://github.com/IS-PROJECT-2026/elimu-ai-166384.git
 cd elimu-ai-166384
 cp config.example.js config.js
-# Add your Gemini API key to config.js
+# Add your Groq API key to config.js
 # Open index.html with Live Server in VS Code
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 elimu-ai-166384/
 ├── index.html          # Main application file
 ├── styles.css          # Custom CSS animations and responsive styles
 ├── config.example.js   # API key template (copy to config.js)
-├── config.js           # Your API key (gitignored)
+├── config.js           # API key (gitignored)
 ├── evidence/           # Merge conflict screenshots
 └── README.md           # Project documentation
 ```
 
-## 👨‍💻 Developer
+## Developer
 
-**Philip Tait** — Student ID: 166384  
-BSc Informatics & Computer Science, Strathmore University  
+**Philip Tait** — Student ID: 166384
+BSc Informatics & Computer Science, Strathmore University
 
-## 📄 License
+## Acknowledgements
 
-This project was built as part of the IS-PROJECT-2026 GitHub Crash Program at Strathmore University School of Computing and Engineering Sciences.
-
-## 👏 Acknowledgements
-<<<<<<< HEAD
 - Strathmore University School of Computing and Engineering Sciences
-=======
-- Google Gemini API and Groq AI for powering the AI features
->>>>>>> conflict/readme-b
+- Google Groq AI for powering the AI inference layer
+
+## License
+
+Built as part of the IS-PROJECT-2026 GitHub Crash Program at Strathmore University School of Computing and Engineering Sciences.
 ```
-
-
-
