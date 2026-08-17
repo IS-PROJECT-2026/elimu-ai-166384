@@ -157,16 +157,19 @@
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
 
 <!-- NAVBAR -->
-<header class="bg-secondary text-on-secondary font-headline-md sticky top-0 shadow-md flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 w-full h-16 z-50">
+ <header class="bg-secondary text-on-secondary sticky top-0 shadow-md flex justify-between items-center px-margin-mobile md:px-margin-desktop w-full h-16 z-50">
   <div class="flex items-center gap-2">
-    <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1;">pets</span>
-    <span class="font-display-lg text-headline-md-mobile md:text-headline-md text-primary-container font-extrabold">Elimu AI</span>
+    <span class="material-symbols-outlined text-primary-container text-3xl" style="font-variation-settings:'FILL' 1;">pets</span>
+    <div class="flex flex-col leading-tight">
+      <span class="font-extrabold text-primary-container text-xl">Elimu AI</span>
+      <span class="text-on-secondary opacity-70 text-xs block">Your CBC Study Friend 🇰🇪</span>
+    </div>
   </div>
-  <div class="flex items-center gap-4">
-    <div class="hidden md:flex items-center bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full cursor-pointer">
+  <div class="flex items-center gap-3">
+    <div class="relative flex items-center bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full cursor-pointer">
       <span class="font-label-lg text-label-lg" id="grade-label">Grade 4</span>
-      <span class="material-symbols-outlined ml-2">expand_more</span>
-      <select id="grade-select" class="absolute opacity-0 w-24 cursor-pointer" onchange="updateGrade(this.value)">
+      <span class="material-symbols-outlined ml-1 text-sm">expand_more</span>
+      <select id="grade-select" onchange="updateGrade(this.value)" class="absolute inset-0 opacity-0 w-full cursor-pointer rounded-full">
         <option value="1">Grade 1</option>
         <option value="2">Grade 2</option>
         <option value="3">Grade 3</option>
@@ -181,9 +184,10 @@
         <option value="12">Grade 12</option>
       </select>
     </div>
-    <span class="material-symbols-outlined text-primary-container font-bold hover:scale-105 transition-transform cursor-pointer">account_circle</span>
+    <span class="material-symbols-outlined text-primary-container text-3xl hover:scale-105 transition-transform cursor-pointer">account_circle</span>
   </div>
 </header>
+ 
 
 <!-- MAASAI PATTERN STRIP -->
 <div class="w-full h-2 pattern-strip border-b-4 border-primary"></div>
