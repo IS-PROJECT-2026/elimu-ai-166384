@@ -41,22 +41,24 @@
 ## 4. Screenshots of Key GitHub Features
 
 ### A. Milestones and Issues
-[PASTE YOUR MILESTONE SCREENSHOT DIRECTLY HERE]
+<img width="1912" height="787" alt="image" src="https://github.com/user-attachments/assets/58a0ff6a-ca7d-480b-8ff3-93acec1734f6" />
 
 * **Caption:** Three milestones covering Foundation, Core AI Feature, and Polish & Deployment, each with granular issues linked to them.
 
 ### B. Project Board
-[PASTE YOUR PROJECT BOARD SCREENSHOT DIRECTLY HERE]
+<img width="1916" height="988" alt="image" src="https://github.com/user-attachments/assets/c3bd97ce-6b5b-44d6-90ba-4f584f10525e" />
+
 
 * **Caption:** Kanban board showing issues progressing through Backlog, In Progress, In Review and Done columns.
 
 ### C. Branching Architecture
-[PASTE YOUR BRANCHING SCREENSHOT DIRECTLY HERE]
+<img width="1909" height="997" alt="image" src="https://github.com/user-attachments/assets/301757f0-7ffd-4ba5-ba70-1ac8e3627f60" />
+
 
 * **Caption:** Feature branches following the category/issue-number-description convention including feat/, fix/, style/, docs/ and conflict/ prefixes.
 
 ### D. Pull Requests & Traceability
-[PASTE YOUR PULL REQUEST SCREENSHOT DIRECTLY HERE]
+<img width="1899" height="1030" alt="image" src="https://github.com/user-attachments/assets/9ce4444b-570b-43ac-894c-a15bdcea0fe4" />
 
 * **Caption:** PR #13 linked to Issue #4 showing Gemini API prompt improvements with clear description and milestone assignment.
 
@@ -66,20 +68,24 @@
 
 ### Conflict 1 — Full Chronology
 
+
 **What cause did you use?** Same Line Edits
 
 #### Step 1: Generating the Clash
-[PASTE SCREENSHOT OF ATTEMPTED MERGE / TERMINAL WARNING HERE]
+
+<img width="1521" height="505" alt="image" src="https://github.com/user-attachments/assets/042a2d7f-cf29-4a58-b934-80f942c04c85" />
 
 * **Caption:** conflict/branch-a and conflict/branch-b both edited the same footer copyright line in index.html, triggering a merge conflict when branch-b was merged after branch-a.
 
 #### Step 2: Inside the Code Editor (Conflict Markers)
-[PASTE SCREENSHOT OF RAW CONFLICT MARKERS HERE]
+
+<img width="1518" height="223" alt="image" src="https://github.com/user-attachments/assets/71e300e1-706d-4726-8bc6-ab9a2b25371d" />
 
 * **Caption:** VS Code showing <<<<<<< HEAD, ======= and >>>>>>> conflict/branch-b markers on the footer copyright line. Branch-a had "Kenyan Students with Groq AI" while branch-b had "Powered by AI for CBC Kenya".
 
 #### Step 3: Resolution & Clean Merge
-[PASTE SCREENSHOT OF CLEAN RESOLUTION HERE]
+
+<img width="993" height="86" alt="image" src="https://github.com/user-attachments/assets/bfe8ebbd-b76b-40bf-b292-3cf76e7c46b6" />
 
 * **Caption:** Conflict resolved by combining both changes into a single clean copyright line and committing the merge result.
 
@@ -91,7 +97,7 @@
 
 **Why does this cause trigger a conflict?** Two branches both added different content to the very last line of README.md simultaneously. Since both used the "last line" as their insertion point, Git sees an overlap and cannot automatically decide which content should come first.
 
-[PASTE SCREENSHOT OF CONFLICT MARKERS FOR CONFLICT 2 HERE]
+<img width="1521" height="505" alt="image" src="https://github.com/user-attachments/assets/fb00f1e4-d7c0-4577-81e5-19beeadac2f3" />
 
 * **Caption:** conflict/readme-a and conflict/readme-b both appended different acknowledgement sections to the bottom of README.md causing a conflict on merge.
 
@@ -103,7 +109,8 @@
 
 **Why does this cause trigger a conflict?** One branch (conflict/edit-notes) modified notes.md by adding API decision content, while another branch (conflict/delete-notes) deleted the file entirely. Git cannot automatically decide whether to keep the modified version or honour the deletion, so it raises a conflict and leaves the resolution to the developer.
 
-[PASTE SCREENSHOT OF CONFLICT MARKERS FOR CONFLICT 3 HERE]
+<img width="993" height="86" alt="image" src="https://github.com/user-attachments/assets/244fe63c-625e-48e7-8e36-ecedf65b6e0f" />
+
 
 * **Caption:** Terminal showing "CONFLICT (modify/delete): notes.md deleted in conflict/delete-notes and modified in HEAD" — Git flagged the delete vs modify clash.
 
