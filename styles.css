@@ -1,0 +1,117 @@
+/* ── Elimu AI Custom Styles ── */
+
+/* Smooth scroll for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for chat messages */
+#chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+#chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+#chat-messages::-webkit-scrollbar-thumb {
+  background: #d0c6ab;
+  border-radius: 4px;
+}
+
+/* Subject pill hover animation */
+.subject-btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.subject-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+.subject-btn.active {
+  outline: 3px solid #1b1c1c;
+  outline-offset: 2px;
+}
+
+/* Chat message fade-in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#chat-messages > div {
+  animation: fadeInUp 0.25s ease forwards;
+}
+
+/* Typing indicator dots */
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: #7e775f;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%            { transform: translateY(-6px); }
+}
+
+/* Quiz option correct/wrong states */
+.quiz-option.correct {
+  background-color: #acf4a4 !important;
+  border: 2px solid #2a6b2c !important;
+  color: #002203 !important;
+}
+.quiz-option.wrong {
+  background-color: #ffdad6 !important;
+  border: 2px solid #ba1a1a !important;
+  color: #93000a !important;
+}
+
+/* Send button pulse on hover */
+#chat-input:focus + button,
+button[onclick="sendMessage()"]:hover {
+  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.3);
+}
+
+/* Maasai pattern strip */
+.pattern-strip {
+  background-color: #2a6b2c;
+  background-image:
+    linear-gradient(135deg, #ffd700 25%, transparent 25%),
+    linear-gradient(225deg, #ffd700 25%, transparent 25%),
+    linear-gradient(45deg,  #ffd700 25%, transparent 25%),
+    linear-gradient(315deg, #ffd700 25%, #2a6b2c 25%);
+  background-position: 10px 0, 10px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat-x;
+}
+
+/* Card lift effect */
+.lift-effect {
+  box-shadow: 0 4px 6px -1px rgba(42, 107, 44, 0.1),
+              0 2px 4px -1px rgba(42, 107, 44, 0.06);
+  transition: box-shadow 0.2s ease;
+}
+.lift-effect:hover {
+  box-shadow: 0 8px 16px -2px rgba(42, 107, 44, 0.15),
+              0 4px 8px -2px rgba(42, 107, 44, 0.1);
+}
+
+/* Button press effect */
+.button-press {
+  border-bottom-width: 4px;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-in-out;
+}
+.button-press:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .subject-btn {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
