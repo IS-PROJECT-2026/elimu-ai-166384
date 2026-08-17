@@ -414,13 +414,19 @@
     addUserMessage(text);
     showTyping();
 
-    const prompt = `You are Elimu AI, a friendly CBC curriculum study assistant for Kenyan students.
-The student is in Grade ${currentGrade} studying ${currentSubject}.
-Reply in simple, clear English suitable for a Grade ${currentGrade} student.
-Use relatable Kenyan examples (chapati, matatu, shamba, etc.) where helpful.
-Keep your reply concise — 3 to 5 sentences max unless explaining a complex concept.
-Never give harmful, off-topic, or adult content. Stay focused on education.
-Student asks: ${text}`;
+    const prompt = `You are Elimu AI, a warm and encouraging CBC curriculum tutor for Kenyan students.
+You are currently helping a Grade ${currentGrade} student with ${currentSubject}.
+
+STRICT RULES:
+- Only answer questions related to education and the CBC curriculum
+- If asked anything off-topic, politely redirect back to studying
+- Never use complex jargon — explain like talking to a Grade ${currentGrade} student
+- Always use at least one Kenyan example (chapati, matatu, shamba, M-Pesa, Nairobi, counties)
+- Keep answers to 3-5 sentences unless the concept needs more detail
+- End every response with either a question to check understanding or an encouraging phrase
+- Never provide harmful, adult or political content
+
+Student question: ${text}`;
 
     try {
       const res  = await fetch(API_URL, {
@@ -450,15 +456,15 @@ Student asks: ${text}`;
     document.getElementById("quiz-loading").classList.remove("hidden");
     document.getElementById("quiz-content").classList.add("hidden");
 
-    const prompt = `Generate a single multiple-choice quiz question for a Grade ${currentGrade} Kenyan CBC student about ${currentSubject}.
-Use a simple Kenyan context (e.g. chapati, matatu, shamba, counties).
-Return ONLY a JSON object in this exact format, no extra text:
-{
-  "question": "...",
-  "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
-  "correct": 1
-}
-Where "correct" is the 0-based index of the correct answer.`;
+    const prompt = `You are a CBC curriculum quiz generator for Kenyan students.
+    Generate ONE multiple choice question for a Grade ${currentGrade} student about ${currentSubject}.
+    The question MUST use a Kenyan real-life context (matatu, chapati, shamba, counties, M-Pesa etc).
+    The question should be age-appropriate and clearly worded.
+    
+    Return ONLY valid JSON in this exact format with no extra text or markdown:
+    {"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct":0}
+    
+    Where "correct" is the 0-based index of the correct answer.`;
 
     try {
       const res  = await fetch(API_URL, {
