@@ -71,7 +71,11 @@ BSc Informatics & Computer Science, Strathmore University
 This project was built as part of the IS-PROJECT-2026 GitHub Crash Program at Strathmore University School of Computing and Engineering Sciences.
 
 ## 👏 Acknowledgements
+<<<<<<< HEAD
 - Strathmore University School of Computing and Engineering Sciences
+=======
+- Google Gemini API and Groq AI for powering the AI features
+>>>>>>> conflict/readme-b
 ```
 
 
