@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elimu AI - Your CBC Study Friend</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "outline-variant": "#d0c6ab",
+          "secondary-fixed": "#acf4a4",
+          "on-surface": "#1b1c1c",
+          "inverse-on-surface": "#f3f0ef",
+          "on-primary-container": "#705e00",
+          "outline": "#7e775f",
+          "on-tertiary-container": "#005db8",
+          "on-primary": "#ffffff",
+          "primary-container": "#ffd700",
+          "on-tertiary-fixed": "#001b3d",
+          "inverse-primary": "#e9c400",
+          "primary-fixed": "#ffe16d",
+          "surface-container-low": "#f6f3f2",
+          "on-error-container": "#93000a",
+          "primary-fixed-dim": "#e9c400",
+          "on-background": "#1b1c1c",
+          "secondary-fixed-dim": "#91d78a",
+          "background": "#fcf9f8",
+          "on-tertiary-fixed-variant": "#00468c",
+          "surface-tint": "#705d00",
+          "surface-dim": "#dcd9d9",
+          "surface-container": "#f0eded",
+          "on-primary-fixed": "#221b00",
+          "on-tertiary": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "tertiary": "#005db7",
+          "on-error": "#ffffff",
+          "secondary": "#2a6b2c",
+          "primary": "#705d00",
+          "surface-variant": "#e5e2e1",
+          "on-primary-fixed-variant": "#544600",
+          "surface": "#fcf9f8",
+          "on-secondary-container": "#307231",
+          "inverse-surface": "#303030",
+          "surface-container-highest": "#e5e2e1",
+          "secondary-container": "#acf4a4",
+          "tertiary-container": "#c8daff",
+          "tertiary-fixed": "#d6e3ff",
+          "on-secondary-fixed-variant": "#0c5216",
+          "on-secondary": "#ffffff",
+          "error-container": "#ffdad6",
+          "surface-container-high": "#eae7e7",
+          "surface-bright": "#fcf9f8",
+          "on-surface-variant": "#4d4732",
+          "error": "#ba1a1a",
+          "on-secondary-fixed": "#002203",
+          "tertiary-fixed-dim": "#a9c7ff"
+        },
+        borderRadius: {
+          DEFAULT: "1rem",
+          lg: "2rem",
+          xl: "3rem",
+          full: "9999px"
+        },
+        spacing: {
+          "margin-desktop": "64px",
+          "unit": "8px",
+          "gutter": "16px",
+          "container-max": "1100px",
+          "touch-target-min": "48px",
+          "margin-mobile": "20px"
+        },
+        fontFamily: {
+          "display-lg": ["Nunito Sans", "sans-serif"],
+          "headline-lg": ["Nunito Sans", "sans-serif"],
+          "button-text": ["Nunito Sans", "sans-serif"],
+          "headline-md": ["Nunito Sans", "sans-serif"],
+          "body-md": ["Nunito Sans", "sans-serif"],
+          "body-lg": ["Nunito Sans", "sans-serif"],
+          "headline-lg-mobile": ["Nunito Sans", "sans-serif"],
+          "label-lg": ["Nunito Sans", "sans-serif"]
+        },
+        fontSize: {
+          "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "800" }],
+          "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "800" }],
+          "button-text": ["18px", { lineHeight: "24px", fontWeight: "800" }],
+          "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+          "body-md": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+          "body-lg": ["20px", { lineHeight: "30px", fontWeight: "400" }],
+          "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "800" }],
+          "label-lg": ["16px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "700" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .pattern-strip {
+    background-color: #2a6b2c;
+    background-image: linear-gradient(135deg, #ffd700 25%, transparent 25%),
+                      linear-gradient(225deg, #ffd700 25%, transparent 25%),
+                      linear-gradient(45deg, #ffd700 25%, transparent 25%),
+                      linear-gradient(315deg, #ffd700 25%, #2a6b2c 25%);
+    background-position: 10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat-x;
+  }
+  .lift-effect {
+    box-shadow: 0 4px 6px -1px rgba(42,107,44,0.1), 0 2px 4px -1px rgba(42,107,44,0.06);
+  }
+  .button-press {
+    border-bottom-width: 4px;
+    border-bottom-color: rgba(0,0,0,0.2);
+    transition: all 0.1s ease-in-out;
+  }
+  .button-press:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+  }
+  .subject-btn.active {
+    outline: 3px solid #1b1c1c;
+    outline-offset: 2px;
+  }
+  .quiz-option.correct {
+    background-color: #acf4a4 !important;
+    border: 2px solid #2a6b2c !important;
+    color: #002203 !important;
+  }
+  .quiz-option.wrong {
+    background-color: #ffdad6 !important;
+    border: 2px solid #ba1a1a !important;
+    color: #93000a !important;
+  }
+  .typing-dot {
+    width: 8px; height: 8px;
+    background: #7e775f;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+  #chat-messages::-webkit-scrollbar { width: 4px; }
+  #chat-messages::-webkit-scrollbar-track { background: transparent; }
+  #chat-messages::-webkit-scrollbar-thumb { background: #d0c6ab; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<header class="bg-secondary text-on-secondary font-headline-md sticky top-0 shadow-md flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 w-full h-16 z-50">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary-container" style="font-variation-settings:'FILL' 1;">pets</span>
+    <span class="font-display-lg text-headline-md-mobile md:text-headline-md text-primary-container font-extrabold">Elimu AI</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <div class="hidden md:flex items-center bg-surface-variant text-on-surface-variant px-4 py-2 rounded-full cursor-pointer">
+      <span class="font-label-lg text-label-lg" id="grade-label">Grade 4</span>
+      <span class="material-symbols-outlined ml-2">expand_more</span>
+      <select id="grade-select" class="absolute opacity-0 w-24 cursor-pointer" onchange="updateGrade(this.value)">
+        <option value="1">Grade 1</option>
+        <option value="2">Grade 2</option>
+        <option value="3">Grade 3</option>
+        <option value="4" selected>Grade 4</option>
+        <option value="5">Grade 5</option>
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+        <option value="10">Grade 10</option>
+        <option value="11">Grade 11</option>
+        <option value="12">Grade 12</option>
+      </select>
+    </div>
+    <span class="material-symbols-outlined text-primary-container font-bold hover:scale-105 transition-transform cursor-pointer">account_circle</span>
+  </div>
+</header>
+
+<!-- MAASAI PATTERN STRIP -->
+<div class="w-full h-2 pattern-strip border-b-4 border-primary"></div>
+
+<!-- MAIN -->
+<main class="flex-grow w-full max-w-[1100px] mx-auto px-margin-mobile md:px-margin-desktop py-8 flex flex-col gap-8 pb-24 md:pb-8">
+
+  <!-- HERO -->
+  <section class="text-center">
+    <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary font-extrabold mb-4">
+      Ask Me Anything About School! 🌟
+    </h1>
+    <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto mb-8">
+      What would you like to learn today? Pick a subject or just start chatting with Elimu!
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <button onclick="selectSubject('Maths','#ffd700','#705e00',this)" class="subject-btn active px-6 py-3 rounded-full bg-primary-container text-on-primary-container font-button-text text-button-text button-press lift-effect">Maths</button>
+      <button onclick="selectSubject('Science','#2a6b2c','#ffffff',this)" class="subject-btn px-6 py-3 rounded-full bg-secondary text-on-secondary font-button-text text-button-text button-press lift-effect">Science</button>
+      <button onclick="selectSubject('English','#005db7','#ffffff',this)" class="subject-btn px-6 py-3 rounded-full bg-tertiary text-on-tertiary font-button-text text-button-text button-press lift-effect">English</button>
+      <button onclick="selectSubject('Kiswahili','#f472b6','#ffffff',this)" class="subject-btn px-6 py-3 rounded-full bg-[#f472b6] text-white font-button-text text-button-text button-press lift-effect">Kiswahili</button>
+      <button onclick="selectSubject('Social Studies','#f97316','#ffffff',this)" class="subject-btn px-6 py-3 rounded-full bg-[#f97316] text-white font-button-text text-button-text button-press lift-effect">Social Studies</button>
+      <button onclick="selectSubject('ICT','#7c3aed','#ffffff',this)" class="subject-btn px-6 py-3 rounded-full bg-[#7c3aed] text-white font-button-text text-button-text button-press lift-effect">ICT</button>
+      <button onclick="selectSubject('Creative Arts','#0891b2','#ffffff',this)" class="subject-btn px-6 py-3 rounded-full bg-[#0891b2] text-white font-button-text text-button-text button-press lift-effect">Creative Arts</button>
+    </div>
+  </section>
+
+  <!-- CONTENT GRID -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <!-- CHAT PANEL (2/3) -->
+    <section class="lg:col-span-2 bg-surface rounded-xl lift-effect border-t-4 border-secondary p-4 md:p-6 flex flex-col h-[600px]">
+      <h2 class="font-headline-md text-headline-md text-secondary mb-4 flex items-center gap-2">
+        <span class="material-symbols-outlined">chat</span> Chat with Elimu 💬
+      </h2>
+
+      <!-- Messages -->
+      <div id="chat-messages" class="flex-grow overflow-y-auto flex flex-col gap-4 mb-4 pr-1">
+        <!-- Initial AI message -->
+        <div class="flex gap-3 max-w-[85%]">
+          <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
+          </div>
+          <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none font-body-md text-body-md">
+            Jambo! I'm Elimu, your CBC study buddy! 🌟 I'm ready to help you with <strong>Maths</strong> today. Ask me anything — from simple sums to tricky fractions!
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Prompts -->
+      <div class="flex gap-2 overflow-x-auto pb-2 mb-4">
+        <button onclick="quickPrompt('Explain this topic to me')" class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-variant transition-colors border border-outline-variant">Explain this topic</button>
+        <button onclick="quickPrompt('Give me an example')" class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-variant transition-colors border border-outline-variant">Give me an example</button>
+        <button onclick="quickPrompt('Quiz me on this subject!')" class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-variant transition-colors border border-outline-variant">Quiz me!</button>
+        <button onclick="quickPrompt('Explain it in a simpler way please')" class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-variant transition-colors border border-outline-variant">Simpler please</button>
+      </div>
+
+      <!-- Input -->
+      <div class="flex gap-2 items-center">
+        <input id="chat-input" onkeydown="if(event.key==='Enter')sendMessage()" class="flex-grow bg-surface-variant text-on-surface border-2 border-transparent focus:border-secondary rounded-full px-6 py-4 font-body-md text-body-md outline-none" placeholder="Type your question here..." type="text"/>
+        <button onclick="sendMessage()" class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center button-press flex-shrink-0 hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">send</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL (1/3) -->
+    <section class="lg:col-span-1 flex flex-col gap-6">
+
+      <!-- XP Card -->
+      <div class="bg-secondary-container text-on-secondary-container rounded-xl p-4 flex items-center justify-between lift-effect border-t-4 border-secondary">
+        <span class="font-headline-md text-headline-md font-bold">⭐ <span id="score-count">0</span> correct today</span>
+        <span class="material-symbols-outlined text-primary-container text-4xl" style="font-variation-settings:'FILL' 1;">military_tech</span>
+      </div>
+
+      <!-- Quiz Card -->
+      <div class="bg-surface rounded-xl lift-effect border-t-4 border-primary-container p-6 flex-grow flex flex-col">
+        <h2 class="font-headline-md text-headline-md text-primary mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined">quiz</span> Quick Quiz 🧠
+        </h2>
+
+        <div id="quiz-loading" class="flex-grow flex items-center justify-center hidden">
+          <div class="flex gap-2">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+
+        <div id="quiz-content" class="flex flex-col flex-grow">
+          <p id="quiz-question" class="font-body-lg text-body-lg font-bold mb-6 flex-grow">
+            A chapati is cut into 8 equal pieces. Amina eats 3 pieces. What fraction did she eat?
+          </p>
+          <div id="quiz-options" class="grid grid-cols-1 gap-3">
+            <button onclick="checkAnswer(this,'wrong')" class="quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors">A. 3/4</button>
+            <button onclick="checkAnswer(this,'correct')" class="quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors">B. 3/8</button>
+            <button onclick="checkAnswer(this,'wrong')" class="quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors">C. 8/3</button>
+            <button onclick="checkAnswer(this,'wrong')" class="quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors">D. 1/3</button>
+          </div>
+          <button id="next-quiz-btn" onclick="loadQuiz()" class="mt-4 w-full py-3 rounded-xl bg-tertiary text-on-tertiary font-button-text text-button-text button-press hidden">
+            Next Question →
+          </button>
+        </div>
+
+        <p class="font-label-lg text-label-lg text-on-surface-variant mt-4 text-sm">AI generates questions from your topic</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bg-surface text-primary font-label-lg text-label-lg font-bold lg:hidden rounded-t-lg border-t-4 border-secondary-container shadow-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 h-20">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+    <span class="material-symbols-outlined">school</span>
+    <span>Study</span>
+  </a>
+  <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1" href="#">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">chat_bubble</span>
+    <span>Chat</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+    <span class="material-symbols-outlined">task_alt</span>
+    <span>Quiz</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+    <span class="material-symbols-outlined">person</span>
+    <span>Profile</span>
+  </a>
+</nav>
+
+<!-- FOOTER -->
+<footer class="bg-secondary text-on-secondary font-body-md text-label-lg text-primary-container font-black py-8 border-t-2 border-primary w-full flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-4 pb-24 md:pb-8">
+  <div class="flex items-center gap-2">
+    <span>© 2025 Elimu AI. Built for CBC with Gemini AI. 🇰🇪</span>
+  </div>
+  <div class="flex gap-6">
+    <a class="text-on-secondary opacity-80 hover:text-primary-container transition-colors" href="#">Privacy Policy</a>
+    <a class="text-on-secondary opacity-80 hover:text-primary-container transition-colors" href="#">Help Center</a>
+    <a class="text-on-secondary opacity-80 hover:text-primary-container transition-colors" href="#">Teachers Portal</a>
+  </div>
+</footer>
+
+<!-- load config -->
+<script src="config.js"></script>
+
+<!-- MAIN SCRIPT -->
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  const API_KEY = CONFIG.API_KEY; // Replace with your actual API key   
+  const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
+
+  let currentSubject = "Maths";
+  let currentGrade   = "4";
+  let score          = 0;
+  let quizAnswered   = false;
+  let correctIndex   = -1;
+
+  // ── SUBJECT SELECTOR ────────────────────────────────────
+  function selectSubject(subject, bg, color, btn) {
+    currentSubject = subject;
+    document.querySelectorAll(".subject-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    addAIMessage(`Great choice! I'm now your <strong>${subject}</strong> tutor for Grade ${currentGrade}. What would you like to learn? 📚`);
+    loadQuiz();
+  }
+
+  // ── GRADE SELECTOR ──────────────────────────────────────
+  function updateGrade(val) {
+    currentGrade = val;
+    document.getElementById("grade-label").textContent = "Grade " + val;
+    addAIMessage(`Got it! I'll now explain things at <strong>Grade ${val}</strong> level. Let's keep learning! 🌟`);
+    loadQuiz();
+  }
+
+  // ── CHAT ────────────────────────────────────────────────
+  function addUserMessage(text) {
+    const msgs = document.getElementById("chat-messages");
+    const div = document.createElement("div");
+    div.className = "flex gap-3 max-w-[85%] self-end ml-auto";
+    div.innerHTML = `<div class="bg-secondary-container text-on-secondary-container p-4 rounded-xl rounded-tr-none font-body-md text-body-md">${text}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function addAIMessage(html) {
+    const msgs = document.getElementById("chat-messages");
+    const div = document.createElement("div");
+    div.className = "flex gap-3 max-w-[85%]";
+    div.innerHTML = `
+      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
+      </div>
+      <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none font-body-md text-body-md">${html}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping() {
+    const msgs = document.getElementById("chat-messages");
+    const div = document.createElement("div");
+    div.id = "typing-indicator";
+    div.className = "flex gap-3 max-w-[85%]";
+    div.innerHTML = `
+      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
+      </div>
+      <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none flex gap-2 items-center">
+        <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+      </div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById("typing-indicator");
+    if (t) t.remove();
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById("chat-input");
+    const text  = input.value.trim();
+    if (!text) return;
+    input.value = "";
+    addUserMessage(text);
+    showTyping();
+
+    const prompt = `You are Elimu AI, a friendly CBC curriculum study assistant for Kenyan students.
+The student is in Grade ${currentGrade} studying ${currentSubject}.
+Reply in simple, clear English suitable for a Grade ${currentGrade} student.
+Use relatable Kenyan examples (chapati, matatu, shamba, etc.) where helpful.
+Keep your reply concise — 3 to 5 sentences max unless explaining a complex concept.
+Never give harmful, off-topic, or adult content. Stay focused on education.
+Student asks: ${text}`;
+
+    try {
+      const res  = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+      const data = await res.json();
+      removeTyping();
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Oops! I couldn't get a response. Please try again.";
+      addAIMessage(reply.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br/>"));
+    } catch (e) {
+      removeTyping();
+      addAIMessage("Oops! Something went wrong. Check your internet and try again. 😊");
+    }
+  }
+
+  function quickPrompt(text) {
+    document.getElementById("chat-input").value = text;
+    sendMessage();
+  }
+
+  // ── QUIZ ────────────────────────────────────────────────
+  async function loadQuiz() {
+    quizAnswered = false;
+    document.getElementById("next-quiz-btn").classList.add("hidden");
+    document.getElementById("quiz-loading").classList.remove("hidden");
+    document.getElementById("quiz-content").classList.add("hidden");
+
+    const prompt = `Generate a single multiple-choice quiz question for a Grade ${currentGrade} Kenyan CBC student about ${currentSubject}.
+Use a simple Kenyan context (e.g. chapati, matatu, shamba, counties).
+Return ONLY a JSON object in this exact format, no extra text:
+{
+  "question": "...",
+  "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+  "correct": 1
+}
+Where "correct" is the 0-based index of the correct answer.`;
+
+    try {
+      const res  = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+      const data = await res.json();
+      let raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      raw = raw.replace(/```json|```/g, "").trim();
+      const quiz = JSON.parse(raw);
+
+      correctIndex = quiz.correct;
+      document.getElementById("quiz-question").textContent = quiz.question;
+      const optDiv = document.getElementById("quiz-options");
+      optDiv.innerHTML = "";
+      quiz.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors";
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(btn, i === correctIndex ? "correct" : "wrong");
+        optDiv.appendChild(btn);
+      });
+    } catch (e) {
+      document.getElementById("quiz-question").textContent = "Could not load question. Tap 'Next Question' to try again.";
+      document.getElementById("quiz-options").innerHTML = "";
+      document.getElementById("next-quiz-btn").classList.remove("hidden");
+    }
+
+    document.getElementById("quiz-loading").classList.add("hidden");
+    document.getElementById("quiz-content").classList.remove("hidden");
+  }
+
+  function checkAnswer(btn, result) {
+    if (quizAnswered) return;
+    quizAnswered = true;
+    const allBtns = document.querySelectorAll(".quiz-option");
+    allBtns.forEach(b => { b.disabled = true; b.classList.add(b === btn ? result : ""); });
+    if (result === "correct") {
+      score++;
+      document.getElementById("score-count").textContent = score;
+      addAIMessage("🎉 Great job! That's correct! Keep it up!");
+    } else {
+      const correctBtn = allBtns[correctIndex];
+      if (correctBtn) correctBtn.classList.add("correct");
+      addAIMessage("Not quite — but that's okay! The correct answer is highlighted in green. Let's try another! 💪");
+    }
+    document.getElementById("next-quiz-btn").classList.remove("hidden");
+  }
+
+  // ── INIT ────────────────────────────────────────────────
+  loadQuiz();
+</script>
+</body>
+</html>
