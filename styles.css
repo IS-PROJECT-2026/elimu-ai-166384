@@ -115,3 +115,54 @@ button[onclick="sendMessage()"]:hover {
     padding: 8px 14px;
   }
 }
+
+/* ── Mobile Responsive Improvements ── */
+
+/* Stack subject pills nicely on small screens */
+@media (max-width: 480px) {
+  .subject-btn {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
+
+/* Reduce chat panel height on mobile */
+@media (max-width: 1024px) {
+  #chat-messages {
+    min-height: 250px;
+  }
+}
+
+/* Make quick prompt chips scrollable on mobile */
+@media (max-width: 640px) {
+  .flex.gap-2.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .flex.gap-2.overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+  .quiz-option {
+    min-height: 52px;
+    font-size: 16px;
+  }
+  #chat-input {
+    font-size: 16px;
+  }
+  button[onclick="sendMessage()"] {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* Footer stacks on mobile */
+@media (max-width: 640px) {
+  footer {
+    text-align: center;
+    gap: 12px;
+  }
+}
