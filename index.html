@@ -264,15 +264,9 @@
     <section class="lg:col-span-1 flex flex-col gap-6">
 
       <!-- XP Card -->
-       <div class="bg-secondary-container text-on-secondary-container rounded-xl p-4 lift-effect border-t-4 border-secondary">
-        <div class="flex items-center justify-between">
-          <span class="font-headline-md text-headline-md font-bold">⭐ <span id="score-count">0</span> correct today</span>
-          <span class="material-symbols-outlined text-primary-container text-4xl" style="font-variation-settings:'FILL' 1;">military_tech</span>
-        </div>
-        <div class="mt-2 flex items-center gap-2">
-          <span class="text-sm font-label-lg opacity-70">Current topic:</span>
-          <span id="quiz-subject-label" class="text-sm font-bold px-2 py-0.5 bg-secondary text-on-secondary rounded-full">Maths</span>
-        </div>
+      <div class="bg-secondary-container text-on-secondary-container rounded-xl p-4 flex items-center justify-between lift-effect border-t-4 border-secondary">
+        <span class="font-headline-md text-headline-md font-bold">⭐ <span id="score-count">0</span> correct today</span>
+        <span class="material-symbols-outlined text-primary-container text-4xl" style="font-variation-settings:'FILL' 1;">military_tech</span>
       </div>
 
       <!-- Quiz Card -->
@@ -342,23 +336,22 @@
   </div>
 </footer>
 
-<!-- load config -->
-<script src="config.js"></script>
+
 
 <!-- MAIN SCRIPT -->
+ // NOTE: This is a demo/academic API key with free tier limits only.
+// In production, API keys should be stored server-side.
 <script>
-  // ── CONFIG ──────────────────────────────────────────────
-  const API_KEY = CONFIG.API_KEY; // Replace with your actual API key   
-  const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
+  const API_KEY = "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";
+  const API_URL = "https://api.groq.com/openai//v1/chat/completions";
 
-  let currentSubject = "Maths";
-  let currentGrade   = "4";
-  let score          = 0;
-  let quizAnswered   = false;
-  let correctIndex   = -1;
+let currentSubject = "Maths";
+let currentGrade = "4";
+let score = 0;
+let quizAnswered = false;
+let correctIndex = -1;
 
-  // ── SUBJECT SELECTOR ────────────────────────────────────
-  function selectSubject(subject, bg, color, btn) {
+function selectSubject(subject, bg, color, btn) {
   currentSubject = subject;
   document.querySelectorAll(".subject-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
@@ -367,69 +360,66 @@
   loadQuiz();
 }
 
-  // ── GRADE SELECTOR ──────────────────────────────────────
-  function updateGrade(val) {
-    currentGrade = val;
-    document.getElementById("grade-label").textContent = "Grade " + val;
-    addAIMessage(`Got it! I'll now explain things at <strong>Grade ${val}</strong> level. Let's keep learning! 🌟`);
-    loadQuiz();
-  }
+function updateGrade(val) {
+  currentGrade = val;
+  document.getElementById("grade-label").textContent = "Grade " + val;
+  addAIMessage(`Got it! I'll now explain things at <strong>Grade ${val}</strong> level. Let's keep learning! 🌟`);
+  loadQuiz();
+}
 
-  // ── CHAT ────────────────────────────────────────────────
-  function addUserMessage(text) {
-    const msgs = document.getElementById("chat-messages");
-    const div = document.createElement("div");
-    div.className = "flex gap-3 max-w-[85%] self-end ml-auto";
-    div.innerHTML = `<div class="bg-secondary-container text-on-secondary-container p-4 rounded-xl rounded-tr-none font-body-md text-body-md">${text}</div>`;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
+function addUserMessage(text) {
+  const msgs = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.className = "flex gap-3 max-w-[85%] self-end ml-auto";
+  div.innerHTML = `<div class="bg-secondary-container text-on-secondary-container p-4 rounded-xl rounded-tr-none font-body-md text-body-md">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
 
-  function addAIMessage(html) {
-    const msgs = document.getElementById("chat-messages");
-    const div = document.createElement("div");
-    div.className = "flex gap-3 max-w-[85%]";
-    div.innerHTML = `
-      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
-        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
-      </div>
-      <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none font-body-md text-body-md">${html}</div>`;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
+function addAIMessage(html) {
+  const msgs = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.className = "flex gap-3 max-w-[85%]";
+  div.innerHTML = `
+    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
+    </div>
+    <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none font-body-md text-body-md">${html}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
 
-  function showTyping() {
-    const msgs = document.getElementById("chat-messages");
-    const div = document.createElement("div");
-    div.id = "typing-indicator";
-    div.className = "flex gap-3 max-w-[85%]";
-    div.innerHTML = `
-      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
-        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
-      </div>
-      <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none flex gap-2 items-center">
-        <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
-      </div>`;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
+function showTyping() {
+  const msgs = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.id = "typing-indicator";
+  div.className = "flex gap-3 max-w-[85%]";
+  div.innerHTML = `
+    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">pets</span>
+    </div>
+    <div class="bg-surface-variant text-on-surface-variant p-4 rounded-xl rounded-tl-none flex gap-2 items-center">
+      <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
 
-  function removeTyping() {
-    const t = document.getElementById("typing-indicator");
-    if (t) t.remove();
-  }
+function removeTyping() {
+  const t = document.getElementById("typing-indicator");
+  if (t) t.remove();
+}
 
-  async function sendMessage() {
-    const input = document.getElementById("chat-input");
-    const text  = input.value.trim();
-    if (!text) return;
-    input.value = "";
-    addUserMessage(text);
-    showTyping();
+async function sendMessage() {
+  const input = document.getElementById("chat-input");
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = "";
+  addUserMessage(text);
+  showTyping();
 
-    const prompt = `You are Elimu AI, a warm and encouraging CBC curriculum tutor for Kenyan students.
+  const prompt = `You are Elimu AI, a warm and encouraging CBC curriculum tutor for Kenyan students.
 You are currently helping a Grade ${currentGrade} student with ${currentSubject}.
-
 STRICT RULES:
 - Only answer questions related to education and the CBC curriculum
 - If asked anything off-topic, politely redirect back to studying
@@ -438,105 +428,112 @@ STRICT RULES:
 - Keep answers to 3-5 sentences unless the concept needs more detail
 - End every response with either a question to check understanding or an encouraging phrase
 - Never provide harmful, adult or political content
-
 Student question: ${text}`;
 
-    try {
-      const res  = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      });
-      const data = await res.json();
-      removeTyping();
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Oops! I couldn't get a response. Please try again.";
-      addAIMessage(reply.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br/>"));
-    } catch (e) {
-      removeTyping();
-      addAIMessage("Oops! Something went wrong. Check your internet and try again. 😊");
-    }
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-oss-120b",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 500
+      })
+    });
+    const data = await res.json();
+    removeTyping();
+    const reply = data?.choices?.[0]?.message?.content || "Oops! I couldn't get a response. Please try again.";
+    addAIMessage(reply.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br/>"));
+  } catch (e) {
+    removeTyping();
+    addAIMessage("Oops! Something went wrong. Check your internet and try again. 😊");
   }
+}
 
-  function quickPrompt(text) {
-    document.getElementById("chat-input").value = text;
-    sendMessage();
-  }
+function quickPrompt(text) {
+  document.getElementById("chat-input").value = text;
+  sendMessage();
+}
 
-  // ── QUIZ ────────────────────────────────────────────────
-  async function loadQuiz() {
-    quizAnswered = false;
-    document.getElementById("next-quiz-btn").classList.add("hidden");
-    document.getElementById("quiz-loading").classList.remove("hidden");
-    document.getElementById("quiz-content").classList.add("hidden");
+async function loadQuiz() {
+  quizAnswered = false;
+  document.getElementById("next-quiz-btn").classList.add("hidden");
+  document.getElementById("quiz-loading").classList.remove("hidden");
+  document.getElementById("quiz-content").classList.add("hidden");
 
-    const prompt = `You are a CBC curriculum quiz generator for Kenyan students.
-    Generate ONE multiple choice question for a Grade ${currentGrade} student about ${currentSubject}.
-    The question MUST use a Kenyan real-life context (matatu, chapati, shamba, counties, M-Pesa etc).
-    The question should be age-appropriate and clearly worded.
-    
-    Return ONLY valid JSON in this exact format with no extra text or markdown:
-    {"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct":0}
-    
-    Where "correct" is the 0-based index of the correct answer.`;
+  const prompt = `You are a CBC curriculum quiz generator for Kenyan students.
+Generate ONE multiple choice question for a Grade ${currentGrade} student about ${currentSubject}.
+The question MUST use a Kenyan real-life context (matatu, chapati, shamba, counties, M-Pesa etc).
+Return ONLY valid JSON in this exact format with no extra text or markdown:
+{"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct":0}
+Where "correct" is the 0-based index of the correct answer.`;
 
-    try {
-      const res  = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      });
-      const data = await res.json();
-      let raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-      raw = raw.replace(/```json|```/g, "").trim();
-      const quiz = JSON.parse(raw);
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-oss-120b",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 300
+      })
+    });
+    const data = await res.json();
+    let raw = data?.choices?.[0]?.message?.content || "";
+    raw = raw.replace(/```json|```/g, "").trim();
+    const quiz = JSON.parse(raw);
 
-      correctIndex = quiz.correct;
-      document.getElementById("quiz-question").textContent = quiz.question;
-      const optDiv = document.getElementById("quiz-options");
-      optDiv.innerHTML = "";
-      quiz.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.className = "quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors";
-        btn.textContent = opt;
-        btn.onclick = () => checkAnswer(btn, i === correctIndex ? "correct" : "wrong");
-        optDiv.appendChild(btn);
-      });
-    } catch (e) {
-      document.getElementById("quiz-question").textContent = "Could not load question. Tap 'Next Question' to try again.";
-      document.getElementById("quiz-options").innerHTML = "";
-      document.getElementById("next-quiz-btn").classList.remove("hidden");
-    }
-
-    document.getElementById("quiz-loading").classList.add("hidden");
-    document.getElementById("quiz-content").classList.remove("hidden");
-  }
-
-  function checkAnswer(btn, result) {
-    if (quizAnswered) return;
-    quizAnswered = true;
-    const allBtns = document.querySelectorAll(".quiz-option");
-    allBtns.forEach(b => { b.disabled = true; b.classList.add(b === btn ? result : ""); });
-    if (result === "correct") {
-      score++;
-      document.getElementById("score-count").textContent = score;
-      addAIMessage("🎉 Great job! That's correct! Keep it up!");
-    } else {
-      const correctBtn = allBtns[correctIndex];
-      if (correctBtn) correctBtn.classList.add("correct");
-      addAIMessage("Not quite — but that's okay! The correct answer is highlighted in green. Let's try another! 💪");
-    }
+    correctIndex = quiz.correct;
+    document.getElementById("quiz-question").textContent = quiz.question;
+    const optDiv = document.getElementById("quiz-options");
+    optDiv.innerHTML = "";
+    quiz.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-option w-full text-left px-6 py-4 rounded-xl bg-surface-variant text-on-surface-variant font-button-text text-button-text button-press hover:bg-surface-container-high transition-colors";
+      btn.textContent = opt;
+      btn.onclick = () => checkAnswer(btn, i === correctIndex ? "correct" : "wrong");
+      optDiv.appendChild(btn);
+    });
+  } catch (e) {
+    document.getElementById("quiz-question").textContent = "Could not load question. Tap 'Next Question' to try again.";
+    document.getElementById("quiz-options").innerHTML = "";
     document.getElementById("next-quiz-btn").classList.remove("hidden");
   }
 
-  // ── CLEAR CHAT ──────────────────────────────────────────
+  document.getElementById("quiz-loading").classList.add("hidden");
+  document.getElementById("quiz-content").classList.remove("hidden");
+}
+
+function checkAnswer(btn, result) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const allBtns = document.querySelectorAll(".quiz-option");
+  allBtns.forEach(b => { b.disabled = true; b.classList.add(b === btn ? result : ""); });
+  if (result === "correct") {
+    score++;
+    document.getElementById("score-count").textContent = score;
+    addAIMessage("🎉 Great job! That's correct! Keep it up!");
+  } else {
+    const correctBtn = allBtns[correctIndex];
+    if (correctBtn) correctBtn.classList.add("correct");
+    addAIMessage("Not quite — but that's okay! The correct answer is highlighted in green. Let's try another! 💪");
+  }
+  document.getElementById("next-quiz-btn").classList.remove("hidden");
+}
+
 function clearChat() {
   const msgs = document.getElementById("chat-messages");
   msgs.innerHTML = "";
   addAIMessage(`Sawa! Fresh start. 😊 I'm still your <strong>${currentSubject}</strong> tutor for Grade ${currentGrade}. What would you like to learn?`);
 }
 
-  // ── INIT ────────────────────────────────────────────────
-  loadQuiz();
+loadQuiz();
 </script>
 </body>
 </html>
