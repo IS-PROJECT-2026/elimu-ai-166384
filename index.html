@@ -220,9 +220,15 @@
 
     <!-- CHAT PANEL (2/3) -->
     <section class="lg:col-span-2 bg-surface rounded-xl lift-effect border-t-4 border-secondary p-4 md:p-6 flex flex-col h-[600px]">
-      <h2 class="font-headline-md text-headline-md text-secondary mb-4 flex items-center gap-2">
-        <span class="material-symbols-outlined">chat</span> Chat with Elimu 💬
-      </h2>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-headline-md text-headline-md text-secondary flex items-center gap-2">
+          <span class="material-symbols-outlined">chat</span> Chat with Elimu 💬
+        </h2>
+        <button onclick="clearChat()" class="flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-sm font-label-lg hover:bg-surface-variant transition-colors border border-outline-variant">
+          <span class="material-symbols-outlined text-sm">delete_sweep</span>
+          Clear
+        </button>
+      </div>
 
       <!-- Messages -->
       <div id="chat-messages" class="flex-grow overflow-y-auto flex flex-col gap-4 mb-4 pr-1">
@@ -514,6 +520,13 @@ Student question: ${text}`;
     }
     document.getElementById("next-quiz-btn").classList.remove("hidden");
   }
+
+  // ── CLEAR CHAT ──────────────────────────────────────────
+function clearChat() {
+  const msgs = document.getElementById("chat-messages");
+  msgs.innerHTML = "";
+  addAIMessage(`Sawa! Fresh start. 😊 I'm still your <strong>${currentSubject}</strong> tutor for Grade ${currentGrade}. What would you like to learn?`);
+}
 
   // ── INIT ────────────────────────────────────────────────
   loadQuiz();
